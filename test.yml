@@ -47,6 +47,7 @@ steps:
   
   - block: ":shipit: Deploy Frontend?"
     branches: "master"
-    label: ":rocket: Deploy Frontend"
+    
+  - label: ":rocket: Deploy Frontend"
     trigger: "trigger-me"
     branches: "master"
