@@ -1,12 +1,52 @@
 steps:
-    - block: "Request Release"
-      fields:
-        - select: "Bar"
-          key: "bar"
-          options:
-            - label: "One"
-              value: "one"
-            - label: "Two"
-              value: "two"
-    - trigger: "trigger-me"
-      label: ":package: Release"
+  - label: ":shell: Shellcheck"
+    agents: "queue=default"
+    command: echo "done"
+
+  - wait
+
+  - label: ":jest: Run Tests"
+    agents: "queue=default"
+    command: echo "done"
+
+  - label: ":php: Build WP JS"
+    agents: "queue=default"
+    command: echo "done"
+    
+  - label: ":storybook: :one: Deploy Storybook"
+    agents: "queue=default"
+    command: echo "done"
+    concurrency: 1
+    concurrency_group: "storybook"
+
+  - label: ":storybook: :two: :loudspeaker: Post PR comment"
+    agents: "queue=default"
+    command: echo "done"
+    concurrency: 1
+    concurrency_group: "storybook"
+
+  - wait
+  
+  - label: ":docker: Build Image"
+    agents: "queue=default"
+    command: echo "done"
+
+  - wait
+  
+  - label: ":docker: Push Tags"
+    agents: "queue=default"
+    command: echo "done"
+
+  - wait
+  
+  - label: ":rocket: Deploy with Samson (Production)"
+    agents: "queue=default"
+    command: echo "done"
+
+  - wait
+  
+  - block: ":shipit: Deploy Frontend?"
+    branches: "master"
+    label: ":rocket: Deploy Frontend"
+    trigger: "trigger-me"
+    branches: "master"
