@@ -1,0 +1,16 @@
+steps:
+  - label: ":docker: Build Frontend Image"
+    agents: "queue=default"
+    command: echo "done"
+
+  - wait
+  
+  - label: ":docker: Push Tags"
+    agents: "queue=default"
+    command: echo "done"
+    
+  - wait
+  
+  - name: ":rocket: Deploy Frontend to Staging with Samson"
+    agents: "queue=default"
+    command: echo "done"
